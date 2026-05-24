@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────── ROOT VARIABLES ─────────────── */
+:root {
+  --void: #050505;
+  --electric: #00D4FF;
+  --electric-2: #0EA5E9;
+  --plasma: #8B5CF6;
+  --plasma-2: #7C3AED;
+  --chrome: rgba(255, 255, 255, 0.85);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.07);
+}
+
+/* ─────────────── FONT IMPORTS ─────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* ─────────────── BASE RESET ─────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #050505;
+  color: #fafafa;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────── SELECTION ─────────────── */
+::selection {
+  background: rgba(0, 212, 255, 0.25);
+  color: #fafafa;
+}
+
+/* ─────────────── SCROLLBAR ─────────────── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* ─────────────── CUSTOM CURSOR ─────────────── */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #00D4FF;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 212, 255, 0.6);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+}
+
+.cursor-ring.hovered {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(139, 92, 246, 0.8);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+/* ─────────────── GLASS MORPHISM ─────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-blue {
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+.glass-plasma {
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+/* ─────────────── GLOW EFFECTS ─────────────── */
+.glow-blue {
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(0, 212, 255, 0.1);
+}
+
+.glow-plasma {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4);
+}
+
+.text-glow-plasma {
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 40px rgba(139, 92, 246, 0.4);
+}
+
+/* ─────────────── NOISE TEXTURE ─────────────── */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0.04;
+}
+
+/* ─────────────── GRID OVERLAY ─────────────── */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─────────────── GRADIENT TEXT ─────────────── */
+.gradient-text-blue {
+  background: linear-gradient(135deg, #00D4FF 0%, #0EA5E9 50%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-plasma {
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─────────────── TYPOGRAPHY ─────────────── */
+.font-display { font-family: 'Syne', sans-serif; }
+.font-mono { font-family: 'Space Mono', monospace; }
+
+/* ─────────────── SECTION DIVIDER ─────────────── */
+.section-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+}
+
+/* ─────────────── LOADER ─────────────── */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─────────────── REVEAL ANIMATION ─────────────── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* ─────────────── BUTTON STYLES ─────────────── */
+.btn-primary {
+  position: relative;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 4px;
+  color: #fafafa;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: none;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(139, 92, 246, 0.25));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover {
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.btn-outline {
+  padding: 14px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fafafa;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ─────────────── MARQUEE CONTAINER ─────────────── */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ─────────────── SCAN LINE ─────────────── */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.05), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 9001;
+}
+
+/* ─────────────── ANIMATED BORDER ─────────────── */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(0, 212, 255, 0.3); }
+  50% { border-color: rgba(139, 92, 246, 0.5); }
+}
+
+.animated-border {
+  animation: borderGlow 3s ease-in-out infinite;
+}
