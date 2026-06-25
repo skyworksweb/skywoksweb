@@ -3,7 +3,14 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
-const budgets = ["< 5 000€", "5 000 – 15 000€", "15 000 – 50 000€", "50 000€ +"];
+const COMPANY_EMAIL = "buildbywc@gmail.com";
+
+const budgets = [
+  "< 500 000 FCFA",
+  "500k – 2M FCFA",
+  "2M – 8M FCFA",
+  "8M+ FCFA / Sur devis",
+];
 
 export default function Contact() {
   const ref = useRef(null);
@@ -18,6 +25,7 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,14 +36,42 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setSending(false);
-    setSubmitted(true);
+    setError(false);
+
+    const data = new FormData();
+    data.append("name", form.name);
+    data.append("email", form.email);
+    data.append("company", form.company || "—");
+    data.append("budget", form.budget || "Non spécifié");
+    data.append("message", form.message);
+    data.append("_subject", `Nouveau projet WebCore — ${form.company || form.name}`);
+    data.append("_captcha", "false");
+    data.append("_template", "table");
+
+    try {
+      const res = await fetch(
+        `https://formsubmit.co/ajax/${COMPANY_EMAIL}`,
+        {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: data,
+        }
+      );
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
-    <section id="contact" className="relative py-32 px-6 md:px-12">
-      <div className="section-line mb-24" />
+    <section id="contact" className="relative py-24 md:py-32 px-4 md:px-12">
+      <div className="section-line mb-16 md:mb-24" />
 
       {/* Background effects */}
       <div
@@ -47,21 +83,12 @@ export default function Contact() {
           filter: "blur(80px)",
         }}
       />
-      <div
-        className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-        style={{
-          width: "30vw",
-          height: "30vw",
-          background: "radial-gradient(ellipse, rgba(139,92,246,0.05) 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
 
       <div className="max-w-7xl mx-auto relative">
         {/* Header */}
         <motion.div
           ref={ref}
-          className="mb-20 text-center"
+          className="mb-12 md:mb-20 text-center"
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={staggerContainer}
@@ -71,92 +98,75 @@ export default function Contact() {
             custom={0}
             className="font-mono text-xs tracking-[0.3em] text-electric/60 uppercase block mb-4"
           >
-            Prêt à dominer ?
+            Démarrer un projet
           </motion.span>
           <motion.h2
             variants={fadeInUp}
             custom={0.1}
             className="font-display font-bold tracking-tighter text-white leading-none"
-            style={{ fontSize: "clamp(2.5rem, 8vw, 7rem)", letterSpacing: "-0.04em" }}
+            style={{ fontSize: "clamp(2rem, 8vw, 6rem)", letterSpacing: "-0.04em" }}
           >
             Construisons
             <br />
-            <span className="gradient-text-blue">quelque chose</span>
-            <br />
-            de légendaire.
+            <span className="gradient-text-blue">votre vision</span>
           </motion.h2>
           <motion.p
             variants={fadeInUp}
             custom={0.2}
-            className="mt-8 text-white/40 max-w-lg mx-auto leading-relaxed"
+            className="mt-6 text-white/40 max-w-lg mx-auto leading-relaxed text-sm md:text-base"
           >
-            Chaque grand projet commence par une conversation. Parlez-nous de votre vision
-            et on vous dira comment la rendre inoubliable.
+            Consultation gratuite · Devis sous 48h · Aucun engagement.
+            Votre business mérite des outils IA de qualité.
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr,1.5fr] gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr,1.6fr] gap-10 md:gap-16 items-start">
           {/* Info column */}
           <motion.div
-            className="space-y-8"
+            className="space-y-4"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             {[
-              {
-                label: "Email",
-                value: "hello@webcore.agency",
-                icon: "→",
-                color: "#00D4FF",
-              },
-              {
-                label: "Réponse",
-                value: "Sous 24h garanties",
-                icon: "◎",
-                color: "#8B5CF6",
-              },
-              {
-                label: "Consultation",
-                value: "Gratuite & sans engagement",
-                icon: "◆",
-                color: "#10B981",
-              },
+              { label: "Email", value: COMPANY_EMAIL, icon: "→", color: "#00D4FF" },
+              { label: "Réponse", value: "Sous 48h garanties", icon: "◎", color: "#8B5CF6" },
+              { label: "Localisation", value: "Dakar, Sénégal", icon: "◆", color: "#A855F7" },
+              { label: "Consultation", value: "Gratuite & sans engagement", icon: "★", color: "#10B981" },
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex items-center gap-4 p-5 rounded-xl"
+                className="flex items-center gap-4 p-4 rounded-xl"
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.05)",
                 }}
               >
-                <span className="text-lg" style={{ color: item.color }}>
+                <span className="text-lg shrink-0" style={{ color: item.color }}>
                   {item.icon}
                 </span>
-                <div>
+                <div className="min-w-0">
                   <div className="font-mono text-[10px] text-white/30 uppercase tracking-widest mb-0.5">
                     {item.label}
                   </div>
-                  <div className="text-white/80 text-sm font-medium">{item.value}</div>
+                  <div className="text-white/80 text-sm font-medium break-all">{item.value}</div>
                 </div>
               </div>
             ))}
 
-            {/* "Not just a vendor" box */}
             <div
-              className="p-6 rounded-xl"
+              className="p-5 rounded-xl"
               style={{
-                background: "linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(139,92,246,0.05) 100%)",
+                background: "linear-gradient(135deg, rgba(0,212,255,0.05), rgba(139,92,246,0.05))",
                 border: "1px solid rgba(0,212,255,0.12)",
               }}
             >
               <p className="text-white/50 text-sm leading-relaxed italic">
-                "Nous ne sommes pas juste un prestataire. Nous sommes partenaires de
-                votre croissance — votre succès est notre succès."
+                "Nous concevons des solutions technologiques sur mesure pour les PME africaines
+                — sans les contraintes des grandes agences internationales."
               </p>
-              <div className="mt-3 font-mono text-xs text-electric/60">— L'équipe WEBCORE</div>
+              <div className="mt-3 font-mono text-xs text-electric/60">— L'équipe WebCore · Dakar</div>
             </div>
           </motion.div>
 
@@ -169,9 +179,9 @@ export default function Contact() {
           >
             {submitted ? (
               <motion.div
-                className="h-full flex flex-col items-center justify-center text-center py-16 rounded-2xl"
+                className="flex flex-col items-center justify-center text-center py-16 rounded-2xl"
                 style={{
-                  background: "linear-gradient(135deg, rgba(16,185,129,0.05) 0%, rgba(5,5,5,0.8) 100%)",
+                  background: "linear-gradient(135deg, rgba(16,185,129,0.05), rgba(5,5,5,0.8))",
                   border: "1px solid rgba(16,185,129,0.2)",
                 }}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -181,21 +191,21 @@ export default function Contact() {
                 <h3 className="font-display font-bold text-2xl text-white mb-3">
                   Message envoyé !
                 </h3>
-                <p className="text-white/40 text-sm">
-                  Notre équipe vous contacte sous 24h. Préparez-vous à quelque chose
-                  d'exceptionnel.
+                <p className="text-white/50 text-sm max-w-xs">
+                  Notre équipe vous contacte sous 48h. Préparez-vous à transformer
+                  votre business grâce à l'IA.
                 </p>
               </motion.div>
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="space-y-5 p-8 rounded-2xl"
+                className="space-y-5 p-6 md:p-8 rounded-2xl"
                 style={{
                   background: "rgba(255,255,255,0.01)",
                   border: "1px solid rgba(255,255,255,0.06)",
                 }}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                   <InputField
                     label="Nom complet"
                     name="name"
@@ -220,27 +230,25 @@ export default function Contact() {
                   onChange={handleChange}
                 />
 
-                {/* Budget selector */}
+                {/* Budget */}
                 <div>
                   <label className="font-mono text-[10px] tracking-widest text-white/30 uppercase block mb-2">
-                    Budget estimé
+                    Budget estimé (FCFA)
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {budgets.map((b) => (
                       <button
                         key={b}
                         type="button"
                         onClick={() => setForm({ ...form, budget: b })}
-                        className="font-mono text-xs py-2.5 px-3 rounded transition-all duration-200 cursor-none"
+                        className="font-mono text-xs py-2.5 px-3 rounded transition-all duration-200 text-left"
                         style={{
-                          background:
-                            form.budget === b
-                              ? "rgba(0,212,255,0.12)"
-                              : "rgba(255,255,255,0.02)",
-                          border:
-                            form.budget === b
-                              ? "1px solid rgba(0,212,255,0.3)"
-                              : "1px solid rgba(255,255,255,0.06)",
+                          background: form.budget === b
+                            ? "rgba(0,212,255,0.12)"
+                            : "rgba(255,255,255,0.02)",
+                          border: form.budget === b
+                            ? "1px solid rgba(0,212,255,0.3)"
+                            : "1px solid rgba(255,255,255,0.06)",
                           color: form.budget === b ? "#00D4FF" : "rgba(255,255,255,0.35)",
                         }}
                       >
@@ -253,41 +261,41 @@ export default function Contact() {
                 {/* Message */}
                 <div>
                   <label className="font-mono text-[10px] tracking-widest text-white/30 uppercase block mb-2">
-                    Parlez-nous de votre projet
+                    Décrivez votre projet
                   </label>
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     rows={5}
+                    required
                     className="w-full resize-none rounded-lg px-4 py-3 text-sm text-white/80 focus:outline-none transition-all duration-300"
                     style={{
                       background: "rgba(255,255,255,0.02)",
                       border: "1px solid rgba(255,255,255,0.06)",
                       fontFamily: "inherit",
                     }}
-                    placeholder="Décrivez votre vision, vos objectifs, votre timing..."
-                    onFocus={(e) => {
-                      e.target.style.borderColor = "rgba(0,212,255,0.25)";
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = "rgba(255,255,255,0.06)";
-                    }}
+                    placeholder="Votre activité, vos objectifs, vos délais..."
+                    onFocus={(e) => { e.target.style.borderColor = "rgba(0,212,255,0.25)"; }}
+                    onBlur={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.06)"; }}
                   />
                 </div>
 
+                {error && (
+                  <p className="text-red-400/80 text-xs font-mono">
+                    Erreur d'envoi. Contactez-nous directement : {COMPANY_EMAIL}
+                  </p>
+                )}
+
                 <motion.button
                   type="submit"
-                  className="w-full py-4 font-mono text-sm tracking-widest uppercase rounded-lg relative overflow-hidden"
+                  className="w-full py-4 font-mono text-sm tracking-widest uppercase rounded-xl relative overflow-hidden"
                   style={{
                     background: "linear-gradient(135deg, rgba(0,212,255,0.15), rgba(139,92,246,0.15))",
                     border: "1px solid rgba(0,212,255,0.3)",
                     color: "#fafafa",
                   }}
-                  whileHover={{
-                    boxShadow: "0 0 30px rgba(0,212,255,0.2)",
-                    borderColor: "rgba(0,212,255,0.5)",
-                  }}
+                  whileHover={{ boxShadow: "0 0 30px rgba(0,212,255,0.2)", borderColor: "rgba(0,212,255,0.5)" }}
                   whileTap={{ scale: 0.99 }}
                   disabled={sending}
                 >
@@ -305,6 +313,10 @@ export default function Contact() {
                     "Envoyer le message →"
                   )}
                 </motion.button>
+
+                <p className="text-white/20 text-center text-xs font-mono">
+                  Consultation gratuite · Aucun engagement
+                </p>
               </form>
             )}
           </motion.div>
@@ -315,12 +327,7 @@ export default function Contact() {
 }
 
 function InputField({
-  label,
-  name,
-  value,
-  onChange,
-  type = "text",
-  required = false,
+  label, name, value, onChange, type = "text", required = false,
 }: {
   label: string;
   name: string;
@@ -346,12 +353,8 @@ function InputField({
           border: "1px solid rgba(255,255,255,0.06)",
           fontFamily: "inherit",
         }}
-        onFocus={(e) => {
-          e.target.style.borderColor = "rgba(0,212,255,0.25)";
-        }}
-        onBlur={(e) => {
-          e.target.style.borderColor = "rgba(255,255,255,0.06)";
-        }}
+        onFocus={(e) => { e.target.style.borderColor = "rgba(0,212,255,0.25)"; }}
+        onBlur={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.06)"; }}
       />
     </div>
   );

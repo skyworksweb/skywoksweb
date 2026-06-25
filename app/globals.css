@@ -282,3 +282,26 @@ body {
 .animated-border {
   animation: borderGlow 3s ease-in-out infinite;
 }
+
+/* ─────────────── MOBILE RESPONSIVE ─────────────── */
+@media (max-width: 768px) {
+  /* Restore default cursor on mobile */
+  body {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  /* Improve tap targets */
+  button, a {
+    cursor: pointer;
+  }
+}
+
+/* ─────────────── MODAL SCROLL ─────────────── */
+.modal-open {
+  overflow: hidden;
+}
