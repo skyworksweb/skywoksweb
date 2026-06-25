@@ -1,12 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import dynamic from "next/dynamic";
-
-const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
-  ssr: false,
-  loading: () => null,
-});
 
 const words = ["DOMINATE", "INNOVATE", "DISRUPT", "ELEVATE"];
 
@@ -54,11 +48,6 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* 3D Scene */}
-      <div className="absolute inset-0 z-0">
-        <HeroScene />
-      </div>
-
       {/* Grid overlay */}
       <div className="absolute inset-0 grid-overlay z-[1] opacity-40" />
 
