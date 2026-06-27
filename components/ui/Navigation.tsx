@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Services", href: "#services" },
-  { label: "Projets", href: "#projects" },
+  { label: "Tarifs", href: "#tarifs" },
   { label: "Process", href: "#process" },
-  { label: "IA & Innovation", href: "#ai" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -75,11 +75,11 @@ export default function Navigation() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
+              href="#cta"
+              onClick={(e) => handleNavClick(e, "#cta")}
               className="btn-primary text-xs py-2.5 px-5"
             >
-              Démarrer un projet
+              Audit gratuit
             </a>
           </div>
 
@@ -131,14 +131,14 @@ export default function Navigation() {
                 </motion.a>
               ))}
               <motion.a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, "#contact")}
+                href="#cta"
+                onClick={(e) => handleNavClick(e, "#cta")}
                 className="btn-primary mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                Démarrer un projet
+                Audit gratuit
               </motion.a>
             </nav>
           </motion.div>

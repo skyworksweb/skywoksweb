@@ -24,14 +24,14 @@ const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), {
 });
 
 const marqueeTopItems = [
-  "SITES WEB PREMIUM",
-  "UI/UX DESIGN",
-  "DÉVELOPPEMENT AVANCÉ",
-  "AUTOMATISATION IA",
-  "WEBGL",
-  "THREE.JS",
-  "NEXT.JS",
-  "FRAMER MOTION",
+  "SITES WEB",
+  "ASSISTANTS IA",
+  "WHATSAPP & INSTAGRAM",
+  "GÉNÉRATION DE LEADS",
+  "CONTENU IA",
+  "RÉCEPTION 24H/24",
+  "PME SÉNÉGALAISES",
+  "DAKAR",
 ];
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
           {/* Marquee separator 2 */}
           <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
             <Marquee
-              items={["WE BUILD", "WE INNOVATE", "WE DOMINATE", "WE CREATE", "WE DISRUPT"]}
+              items={["AUDIT GRATUIT", "PRIX FIXE", "SANS SURPRISE", "LIVRAISON RAPIDE", "SUIVI INCLUS", "PAIEMENT WAVE"]}
               speed={18}
               direction="right"
               separator="✦"

@@ -22,14 +22,14 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WEBCORE — Digital Experiences That Dominate",
+  title: "WEBCORE — Sites web & assistants IA pour PME sénégalaises",
   description:
-    "Agence web premium spécialisée dans la création de sites haut de gamme, UI/UX design, développement avancé et automatisation IA.",
-  keywords: "agence web, design premium, développement web, UI/UX, IA, Next.js",
+    "WEBCORE crée des sites web et des assistants IA qui transforment vos visiteurs en clients, 24h/24. Pensé pour les PME du Sénégal. Audit gratuit.",
+  keywords: "agence web Dakar, site web Sénégal, assistant IA, chatbot WhatsApp, PME sénégal, WEBCORE",
   openGraph: {
-    title: "WEBCORE — Digital Experiences That Dominate",
+    title: "WEBCORE — Sites web & assistants IA pour PME sénégalaises",
     description:
-      "Agence web premium spécialisée dans la création de sites haut de gamme, UI/UX design, développement avancé et automatisation IA.",
+      "WEBCORE crée des sites web et des assistants IA qui transforment vos visiteurs en clients, 24h/24. Pensé pour les PME du Sénégal. Audit gratuit.",
     type: "website",
   },
 };

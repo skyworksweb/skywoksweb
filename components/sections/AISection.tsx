@@ -166,8 +166,8 @@ export default function AISection() {
               className="font-display font-bold tracking-tighter text-white leading-none"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.04em" }}
             >
-              IA &
-              <span className="gradient-text-plasma"> Innovation</span>
+              L'IA qui
+              <span className="gradient-text-plasma"> travaille pour vous</span>
             </motion.h2>
           </div>
           <motion.p
@@ -175,9 +175,8 @@ export default function AISection() {
             custom={0.2}
             className="text-white/40 leading-relaxed text-base"
           >
-            Nous intégrons les technologies IA les plus avancées directement dans vos
-            produits. L'automatisation intelligente n'est plus un luxe — c'est un avantage
-            concurrentiel décisif.
+            Nos assistants IA répondent, qualifient et relancent vos clients
+            automatiquement — pendant que vous vous concentrez sur votre métier.
           </motion.p>
         </motion.div>
 
@@ -198,15 +197,15 @@ export default function AISection() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="font-mono text-xs text-white/30 tracking-widest uppercase">
-                  Neural network · Active
+                  Réseau neuronal · Actif
                 </span>
               </div>
               <NeuralNetwork />
               <div className="grid grid-cols-3 gap-4 mt-6 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
                 {[
-                  { label: "Accuracy", value: "99.2%" },
-                  { label: "Latency", value: "12ms" },
-                  { label: "Models", value: "14" },
+                  { label: "Précision", value: "99.2%" },
+                  { label: "Réponse", value: "< 1 min" },
+                  { label: "Canaux", value: "5+" },
                 ].map((s) => (
                   <div key={s.label} className="text-center">
                     <div className="font-display font-bold text-lg gradient-text-plasma">{s.value}</div>
