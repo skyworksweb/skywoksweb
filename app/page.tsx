@@ -6,6 +6,7 @@ import Loader from "@/components/ui/Loader";
 import Navigation from "@/components/ui/Navigation";
 import Marquee from "@/components/ui/Marquee";
 import Hero from "@/components/sections/Hero";
+import PainPoints from "@/components/sections/PainPoints";
 import Services from "@/components/sections/Services";
 import Projects from "@/components/sections/Projects";
 import Process from "@/components/sections/Process";
@@ -48,6 +49,9 @@ export default function Home() {
 
           {/* Hero */}
           <Hero />
+
+          {/* Pain Points */}
+          <PainPoints />
 
           {/* Marquee separator */}
           <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
