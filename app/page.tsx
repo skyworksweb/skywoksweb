@@ -11,6 +11,7 @@ import Services from "@/components/sections/Services";
 import Pricing from "@/components/sections/Pricing";
 import Projects from "@/components/sections/Projects";
 import Process from "@/components/sections/Process";
+import WhyLocal from "@/components/sections/WhyLocal";
 import AISection from "@/components/sections/AISection";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
@@ -75,6 +76,9 @@ export default function Home() {
 
           {/* Process */}
           <Process />
+
+          {/* Why Local */}
+          <WhyLocal />
 
           {/* AI Section */}
           <AISection />
