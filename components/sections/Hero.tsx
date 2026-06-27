@@ -1,36 +1,7 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const words = ["DOMINATE", "INNOVATE", "DISRUPT", "ELEVATE"];
-
-function AnimatedWord() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % words.length);
-    }, 2200);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <span className="relative inline-block overflow-hidden" style={{ height: "1em" }}>
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={index}
-          className="gradient-text-blue inline-block"
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-        >
-          {words[index]}.
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +56,7 @@ export default function Hero() {
             style={{ background: "linear-gradient(90deg, transparent, #00D4FF)" }}
           />
           <span className="font-mono text-xs tracking-[0.35em] text-electric/70 uppercase">
-            Agence Web Premium
+            Agence Web & IA · Dakar
           </span>
           <div
             className="h-px w-12"
@@ -95,8 +66,8 @@ export default function Hero() {
 
         {/* Main headline */}
         <motion.h1
-          className="font-display font-bold leading-none tracking-tighter text-white mb-6"
-          style={{ fontSize: "clamp(3rem, 9vw, 8.5rem)", letterSpacing: "-0.04em" }}
+          className="font-display font-bold leading-none tracking-tighter text-white mb-8"
+          style={{ fontSize: "clamp(2.6rem, 8vw, 7.5rem)", letterSpacing: "-0.04em" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.7 }}
@@ -108,84 +79,65 @@ export default function Hero() {
               animate={{ y: "0%" }}
               transition={{ duration: 0.9, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              WE BUILD
+              Ne perdez plus
             </motion.span>
           </div>
           <div className="overflow-hidden">
             <motion.span
-              className="block"
+              className="block gradient-text-blue"
               initial={{ y: "100%" }}
               animate={{ y: "0%" }}
               transition={{ duration: 0.9, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
             >
-              DIGITAL EXPERIENCES
-            </motion.span>
-          </div>
-          <div className="overflow-hidden">
-            <motion.span
-              className="block"
-              initial={{ y: "100%" }}
-              animate={{ y: "0%" }}
-              transition={{ duration: 0.9, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              THAT{" "}
-              <AnimatedWord />
+              jamais un client.
             </motion.span>
           </div>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
-          className="max-w-xl mx-auto text-white/40 leading-relaxed mb-12"
-          style={{ fontSize: "clamp(0.9rem, 2vw, 1.05rem)" }}
+          className="max-w-2xl mx-auto text-white/50 leading-relaxed mb-10"
+          style={{ fontSize: "clamp(0.95rem, 2vw, 1.15rem)" }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          Nous créons des expériences web qui captivent, convertissent
-          et dominent leur marché. Design haut de gamme, développement
-          avancé, IA intégrée.
+          WEBCORE crée des sites web et des assistants IA qui répondent, qualifient
+          et convertissent vos visiteurs en clients — 24h/24.{" "}
+          <span className="text-white/30">Pensé pour les PME sénégalaises.</span>
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-4"
+          className="flex flex-wrap items-center justify-center gap-4 mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
         >
           <a href="#contact" className="btn-primary text-sm">
-            Démarrer votre projet →
+            Demander un audit gratuit →
           </a>
-          <a href="#projects" className="btn-outline text-sm">
-            Voir nos projets
+          <a href="#services" className="text-white/40 font-mono text-xs tracking-widest uppercase hover:text-white/70 transition-colors">
+            Voir nos services
           </a>
         </motion.div>
 
-        {/* Stats */}
+        {/* Reassurance */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-12 mt-20"
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.7 }}
+          transition={{ duration: 0.8, delay: 1.6 }}
         >
           {[
-            { num: "50+", label: "Projets livrés" },
-            { num: "100%", label: "Satisfaction client" },
-            { num: "3×", label: "Taux de conversion moyen" },
-            { num: "60fps", label: "Animations garanties" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div
-                className="font-display font-bold gradient-text-blue"
-                style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
-              >
-                {stat.num}
-              </div>
-              <div className="font-mono text-xs text-white/30 tracking-widest uppercase mt-1">
-                {stat.label}
-              </div>
-            </div>
+            "Réponse sous 48h",
+            "Gratuit & sans engagement",
+            "Paiement Wave / Orange Money accepté",
+          ].map((item) => (
+            <span key={item} className="flex items-center gap-1.5 font-mono text-[11px] text-white/35">
+              <span className="text-electric/70">✓</span>
+              {item}
+            </span>
           ))}
         </motion.div>
       </motion.div>
