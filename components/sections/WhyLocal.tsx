@@ -10,12 +10,6 @@ const advantages = [
     color: "#00D4FF",
   },
   {
-    icon: "🗣️",
-    title: "Français & wolof",
-    text: "Nos assistants IA parlent la langue de vos clients. Un avantage que les agences internationales ne peuvent pas offrir.",
-    color: "#8B5CF6",
-  },
-  {
     icon: "💳",
     title: "Paiement mobile",
     text: "Wave, Orange Money, carte. Intégrés à vos solutions dès le départ.",
