@@ -16,8 +16,8 @@ const faqs = [
     a: "Oui. On branche nos solutions sur vos canaux existants. Vous n'avez rien à changer.",
   },
   {
-    q: "Est-ce que l'assistant IA parle wolof ?",
-    a: "Oui. Nos assistants répondent en français et en wolof, selon vos clients.",
+    q: "Est-ce que l'assistant IA répond en dehors des heures de bureau ?",
+    a: "Oui. L'assistant répond 24h/24, 7j/7 — nuits, week-ends et jours fériés inclus. Aucun client ne reste sans réponse.",
   },
   {
     q: "Et si quelque chose ne fonctionne pas ?",
