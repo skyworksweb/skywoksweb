@@ -8,6 +8,7 @@ import Marquee from "@/components/ui/Marquee";
 import Hero from "@/components/sections/Hero";
 import PainPoints from "@/components/sections/PainPoints";
 import Services from "@/components/sections/Services";
+import Pricing from "@/components/sections/Pricing";
 import Projects from "@/components/sections/Projects";
 import Process from "@/components/sections/Process";
 import AISection from "@/components/sections/AISection";
@@ -65,6 +66,9 @@ export default function Home() {
 
           {/* Services */}
           <Services />
+
+          {/* Pricing */}
+          <Pricing />
 
           {/* Projects */}
           <Projects />

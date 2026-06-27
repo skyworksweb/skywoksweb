@@ -21,8 +21,8 @@ const offers = [
       "Livraison en 10 à 14 jours ouvrés",
     ],
     pricing: [
-      { formula: "Essentiel", price: "150 000 – 250 000 FCFA", includes: "3 pages, responsive, formulaire contact, hébergement 1 an" },
-      { formula: "Pro", price: "250 000 – 400 000 FCFA", includes: "5 pages, blog, SEO on-page, Google Analytics, support 3 mois" },
+      { formula: "À partir de", price: "150 000 FCFA", includes: "3 pages, responsive, formulaire contact, hébergement 1 an" },
+      { formula: "Maintenance (option)", price: "15 000 – 30 000 FCFA/mois", includes: "Mises à jour, sauvegardes, support technique" },
     ],
   },
   {
@@ -43,8 +43,8 @@ const offers = [
       "Tableau de bord pour suivre les conversations",
     ],
     pricing: [
-      { formula: "Starter", price: "150 000 – 300 000 FCFA", includes: "1 canal (WhatsApp ou site), FAQ + prise de RDV" },
-      { formula: "Business", price: "300 000 – 600 000 FCFA", includes: "Multi-canaux, qualification avancée, rapport mensuel" },
+      { formula: "À partir de", price: "150 000 FCFA", includes: "Installation + configuration, 1 canal (WhatsApp ou site), FAQ + prise de RDV" },
+      { formula: "Abonnement mensuel", price: "35 000 – 75 000 FCFA/mois", includes: "Maintenance, optimisations, support, conversations illimitées" },
     ],
   },
   {
@@ -65,8 +65,8 @@ const offers = [
       "Rapport hebdomadaire des performances",
     ],
     pricing: [
-      { formula: "Essentiel", price: "200 000 – 400 000 FCFA", includes: "Capture + relances auto, 1 canal, rapport mensuel" },
-      { formula: "Pro", price: "400 000 – 800 000 FCFA", includes: "Multi-canaux, scoring, intégration CRM, rapport hebdo" },
+      { formula: "À partir de", price: "200 000 FCFA", includes: "Mise en place du système de capture et relances automatiques" },
+      { formula: "Abonnement mensuel", price: "50 000 – 100 000 FCFA/mois", includes: "Suivi, optimisations, rapport hebdomadaire des performances" },
     ],
   },
   {
@@ -87,8 +87,8 @@ const offers = [
       "Rapport mensuel : portée, engagement, croissance",
     ],
     pricing: [
-      { formula: "Essentiel", price: "100 000 – 180 000 FCFA/mois", includes: "12 posts/mois, 1 réseau, visuels inclus" },
-      { formula: "Pro", price: "180 000 – 350 000 FCFA/mois", includes: "20 posts + 4 vidéos/mois, 3 réseaux, rapport mensuel" },
+      { formula: "À partir de", price: "100 000 FCFA", includes: "Lancement, création de la charte éditoriale et des premiers contenus" },
+      { formula: "Abonnement mensuel", price: "75 000 – 150 000 FCFA/mois", includes: "Flux régulier posts + visuels, jusqu'à 3 réseaux, rapport mensuel" },
     ],
   },
 ];
