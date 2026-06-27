@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 // ← Remplace par ton numéro WhatsApp au format international (ex: 221771234567)
-const WHATSAPP_NUMBER = "221xxxxxxxxx";
+const WHATSAPP_NUMBER = "221772674445";
 const WHATSAPP_MESSAGE = encodeURIComponent("Bonjour WEBCORE, je souhaite un audit gratuit");
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
