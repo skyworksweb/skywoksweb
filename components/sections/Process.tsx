@@ -157,10 +157,10 @@ export default function Process() {
           transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <a
-            href="#contact"
+            href="#cta"
             className="btn-primary text-sm"
           >
-            Commencer par l'audit gratuit →
+            Réserver mon audit gratuit →
           </a>
         </motion.div>
       </div>

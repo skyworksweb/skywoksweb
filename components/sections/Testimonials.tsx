@@ -83,8 +83,8 @@ export default function Testimonials() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <a href="#contact" className="btn-primary text-sm">
-            Demander un audit gratuit →
+          <a href="#cta" className="btn-primary text-sm">
+            Réserver mon audit gratuit →
           </a>
         </motion.div>
       </div>

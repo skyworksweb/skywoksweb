@@ -213,7 +213,7 @@ export default function Pricing() {
               </p>
             </div>
             <a
-              href="#contact"
+              href="#cta"
               className="shrink-0 font-mono text-xs tracking-widest uppercase px-5 py-3 rounded-xl transition-all duration-300 hover:bg-electric/20 text-center"
               style={{
                 background: "rgba(0,212,255,0.1)",
@@ -221,7 +221,7 @@ export default function Pricing() {
                 color: "#00D4FF",
               }}
             >
-              Demander ce pack →
+              Réserver mon audit gratuit →
             </a>
           </div>
         </motion.div>

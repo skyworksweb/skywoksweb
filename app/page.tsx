@@ -14,6 +14,7 @@ import WhyLocal from "@/components/sections/WhyLocal";
 import AISection from "@/components/sections/AISection";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
+import FinalCTA from "@/components/sections/FinalCTA";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/layout/Footer";
 import { useLenis } from "@/hooks/useLenis";
@@ -95,6 +96,9 @@ export default function Home() {
 
           {/* FAQ */}
           <FAQ />
+
+          {/* Final CTA */}
+          <FinalCTA />
 
           {/* Contact */}
           <Contact />

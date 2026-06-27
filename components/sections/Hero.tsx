@@ -107,18 +107,15 @@ export default function Hero() {
           <span className="text-white/30">Pensé pour les PME sénégalaises.</span>
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTA */}
         <motion.div
           className="flex flex-wrap items-center justify-center gap-4 mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <a href="#contact" className="btn-primary text-sm">
-            Demander un audit gratuit →
-          </a>
-          <a href="#services" className="text-white/40 font-mono text-xs tracking-widest uppercase hover:text-white/70 transition-colors">
-            Voir nos services
+          <a href="#cta" className="btn-primary text-sm">
+            Réserver mon audit gratuit →
           </a>
         </motion.div>
 

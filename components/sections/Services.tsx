@@ -209,7 +209,7 @@ function OfferModal({
 
             {/* CTA */}
             <a
-              href="#contact"
+              href="#cta"
               onClick={onClose}
               className="block w-full py-4 text-center font-mono text-sm tracking-widest uppercase rounded-xl transition-all duration-300"
               style={{
@@ -218,7 +218,7 @@ function OfferModal({
                 color: offer.color,
               }}
             >
-              Démarrer ce projet →
+              Réserver mon audit gratuit →
             </a>
           </div>
         </motion.div>
