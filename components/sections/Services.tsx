@@ -1,163 +1,94 @@
 "use client";
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
 
-const services = [
+const offers = [
   {
     id: "01",
-    title: "Création de Sites Web",
-    tagline: "Votre présence digitale, conçue pour convertir",
+    featured: true,
     icon: "◈",
     color: "#00D4FF",
-    tags: ["Next.js", "React", "SEO"],
-    size: "large",
-    description:
-      "WebCore conçoit des sites web performants, optimisés pour mobile et adaptés aux vitesses de connexion africaines. De la vitrine simple à la plateforme e-commerce complexe, chaque site est pensé pour votre marché et vos objectifs business.",
+    title: "Site Express",
+    pitch: "Un site web professionnel, rapide et optimisé mobile, pensé pour transformer vos visiteurs en contacts.",
+    detail: "3 à 5 pages, prêt à accueillir votre assistant IA.",
+    ideal: "Toute entreprise sans site, ou avec un site dépassé.",
     features: [
-      "Site vitrine / institutionnel (1 à 15 pages)",
-      "E-commerce avec paiement Wave, Orange Money, carte",
-      "Landing page optimisée pour la conversion",
-      "Portail ou plateforme web sur mesure",
-      "Refonte et modernisation de site existant",
-      "SEO on-page, score Lighthouse 90+, hébergement inclus",
+      "3 à 5 pages optimisées mobile",
+      "Formulaire de contact & WhatsApp intégré",
+      "SEO de base — trouvable sur Google",
+      "Chargement rapide, même en 3G",
+      "Compatible avec un assistant IA WEBCORE",
+      "Livraison en 10 à 14 jours ouvrés",
     ],
     pricing: [
-      { formula: "Starter", price: "150 000 – 300 000 FCFA", includes: "Vitrine jusqu'à 5 pages, responsive, formulaire de contact, hébergement 1 an" },
-      { formula: "Business", price: "300 000 – 600 000 FCFA", includes: "Jusqu'à 12 pages, blog, SEO, Google Analytics, support 3 mois" },
-      { formula: "E-commerce", price: "600 000 – 1 500 000 FCFA", includes: "Catalogue produits, panier, paiement mobile money, tableau de bord admin" },
-      { formula: "Premium", price: "Sur devis", includes: "Plateforme complexe, espace membre, API tierces, design sur mesure" },
-      { formula: "Maintenance", price: "50 000 – 120 000 FCFA/mois", includes: "Mises à jour, sauvegardes, monitoring, support technique illimité" },
+      { formula: "Essentiel", price: "150 000 – 250 000 FCFA", includes: "3 pages, responsive, formulaire contact, hébergement 1 an" },
+      { formula: "Pro", price: "250 000 – 400 000 FCFA", includes: "5 pages, blog, SEO on-page, Google Analytics, support 3 mois" },
     ],
   },
   {
     id: "02",
-    title: "SaaS Privés",
-    tagline: "Vos processus métier, automatisés et scalables",
-    icon: "⬡",
+    featured: false,
+    icon: "◎",
     color: "#8B5CF6",
-    tags: ["Node.js", "React", "PostgreSQL"],
-    size: "small",
-    description:
-      "Nous développons des applications SaaS sur mesure pour automatiser vos opérations internes, centraliser vos données et créer de la valeur durable. Ces logiciels sont hébergés sur le cloud et accessibles depuis n'importe quel appareil.",
+    title: "Réception 24/7",
+    pitch: "Un assistant IA qui répond à chaque client sur WhatsApp, Instagram et votre site en moins d'une minute, 24h/24.",
+    detail: "Il qualifie la demande et prend le rendez-vous automatiquement. Disponible en français.",
+    ideal: "Cliniques, salons, écoles, restaurants, immobilier.",
     features: [
-      "CRM — gestion clients, pipeline commercial, relances",
-      "Outils RH — fiches employés, congés, paie simplifiée",
-      "Logiciels de facturation et comptabilité légère",
-      "Plateformes de réservation et planification",
-      "Systèmes de gestion de stock et d'inventaire",
-      "Tableaux de bord analytics et reporting automatisé",
+      "Réponse automatique WhatsApp & Instagram",
+      "Prise de rendez-vous sans intervention humaine",
+      "Qualification des demandes avant transfert",
+      "Disponible 7j/7, nuits et week-ends inclus",
+      "En français — adapté au contexte sénégalais",
+      "Tableau de bord pour suivre les conversations",
     ],
     pricing: [
-      { formula: "MVP", price: "500 000 – 1 200 000 FCFA", includes: "Version minimale viable, 1 module principal, hébergement 6 mois" },
-      { formula: "Standard", price: "1 200 000 – 2 500 000 FCFA", includes: "2–4 modules, multi-utilisateurs, rôles, tableau de bord, support 6 mois" },
-      { formula: "Avancé", price: "2 500 000 – 5 000 000 FCFA", includes: "Modules multiples, intégrations API, analytics avancés, support 12 mois" },
-      { formula: "Enterprise", price: "Sur devis", includes: "Solution complète, architecture scalable, SLA garanti, équipe dédiée" },
-      { formula: "Maintenance", price: "80 000 – 200 000 FCFA/mois", includes: "Hébergement, monitoring 24/7, mises à jour, support utilisateurs" },
+      { formula: "Starter", price: "150 000 – 300 000 FCFA", includes: "1 canal (WhatsApp ou site), FAQ + prise de RDV" },
+      { formula: "Business", price: "300 000 – 600 000 FCFA", includes: "Multi-canaux, qualification avancée, rapport mensuel" },
     ],
   },
   {
     id: "03",
-    title: "SaaS Publics",
-    tagline: "Valorisez vos données, ouvrez-vous au grand public",
-    icon: "◎",
-    color: "#0EA5E9",
-    tags: ["Multi-tenant", "Paiement", "API"],
-    size: "small",
-    description:
-      "Un SaaS Public est une plateforme logicielle accessible à plusieurs clients simultanément via abonnement. WebCore conçoit et lance ces plateformes de A à Z : marketplace, plateforme de mise en relation, outil SaaS B2B multi-clients.",
+    featured: false,
+    icon: "⬟",
+    color: "#A855F7",
+    title: "Leads",
+    pitch: "Un système qui capte vos prospects et les relance automatiquement jusqu'au contact.",
+    detail: "Fini les listes de contacts qui dorment.",
+    ideal: "Immobilier, services B2B, formations, e-commerce.",
     features: [
-      "Architecture multi-tenant — un système, plusieurs clients",
-      "Abonnement et paiement récurrent (Wave, Orange Money, Stripe)",
-      "Tableau de bord admin pour gérer utilisateurs et contenus",
-      "Espace utilisateur personnalisé selon le rôle",
-      "API ouverte pour intégrations partenaires",
-      "Scalabilité cloud — tient la montée en charge",
+      "Formulaire de capture optimisé pour la conversion",
+      "Relances automatiques par WhatsApp ou email",
+      "Scoring et priorisation des prospects chauds",
+      "Intégration avec votre agenda ou CRM",
+      "Suivi en temps réel — tableau de bord simple",
+      "Rapport hebdomadaire des performances",
     ],
     pricing: [
-      { formula: "MVP Public", price: "600 000 – 1 500 000 FCFA", includes: "Plateforme fonctionnelle, inscription utilisateurs, 1–2 modules core" },
-      { formula: "Standard", price: "1 500 000 – 3 500 000 FCFA", includes: "Multi-rôles, paiements intégrés, tableau de bord admin, support 6 mois" },
-      { formula: "Marketplace", price: "3 500 000 – 8 000 000 FCFA", includes: "Multi-vendeurs, commissions, messagerie, notation, API" },
-      { formula: "Enterprise", price: "Sur devis", includes: "Architecture scalable dédiée, SLA, équipe produit, roadmap évolutive" },
-      { formula: "Maintenance", price: "100 000 – 250 000 FCFA/mois", includes: "Hébergement, monitoring, mises à jour, support, évolutions mineures" },
+      { formula: "Essentiel", price: "200 000 – 400 000 FCFA", includes: "Capture + relances auto, 1 canal, rapport mensuel" },
+      { formula: "Pro", price: "400 000 – 800 000 FCFA", includes: "Multi-canaux, scoring, intégration CRM, rapport hebdo" },
     ],
   },
   {
     id: "04",
-    title: "AI Voice Agents",
-    tagline: "Accueil client 24h/24 en français et langues locales",
-    icon: "⬟",
-    color: "#A855F7",
-    tags: ["Vapi.ai", "ElevenLabs", "Wolof"],
-    size: "large",
-    description:
-      "Les agents vocaux IA de WebCore automatisent vos interactions téléphoniques grâce à la reconnaissance vocale et l'IA conversationnelle. Ils comprennent le français, l'anglais, le wolof et d'autres langues locales selon votre marché.",
-    features: [
-      "Accueil téléphonique automatisé et routage intelligent",
-      "Prise de rendez-vous et gestion de planning en temps réel",
-      "FAQ vocale — réponses aux questions fréquentes 24h/24",
-      "Qualification de prospects et collecte d'informations",
-      "Notifications et rappels vocaux automatisés",
-      "Transcription et analyse des appels pour amélioration continue",
-    ],
-    pricing: [
-      { formula: "Starter Voice", price: "200 000 – 400 000 FCFA", includes: "Agent vocal simple, FAQ + prise de RDV, 1 flux conversationnel" },
-      { formula: "Business Voice", price: "400 000 – 900 000 FCFA", includes: "Jusqu'à 5 flux, intégration CRM, tableau de bord des appels, rapport mensuel" },
-      { formula: "Premium Voice", price: "900 000 – 2 000 000 FCFA", includes: "Multi-langues (FR/EN/Wolof), IA personnalisée, intégrations API avancées" },
-      { formula: "Enterprise", price: "Sur devis", includes: "Infrastructure dédiée, SLA, formation équipe, amélioration continue mensuelle" },
-      { formula: "Maintenance", price: "70 000 – 180 000 FCFA/mois", includes: "Monitoring, optimisation des flux, mises à jour IA, support technique" },
-    ],
-  },
-  {
-    id: "05",
-    title: "AI Consulting",
-    tagline: "Stratégie IA sur mesure pour votre transformation digitale",
-    icon: "◆",
-    color: "#06B6D4",
-    tags: ["Audit IA", "Roadmap", "Formation"],
-    size: "small",
-    description:
-      "Le consulting IA de WebCore aide les dirigeants à comprendre l'intelligence artificielle, identifier les opportunités concrètes et déployer une roadmap de transformation digitale réaliste. Nos recommandations sont toujours contextualisées et actionnables.",
-    features: [
-      "Audit IA — évaluation de votre maturité digitale",
-      "Stratégie IA — roadmap sur 12 à 36 mois avec ROI estimé",
-      "Sélection technologique — recommandation des outils adaptés",
-      "Formation dirigeants — ateliers IA sans jargon technique",
-      "POC — déploiement rapide d'un cas d'usage pilote",
-      "Cahier des charges pour appel d'offres IA",
-    ],
-    pricing: [
-      { formula: "Audit IA", price: "150 000 – 300 000 FCFA", includes: "Diagnostic 2 jours, rapport complet, session de restitution dirigeante" },
-      { formula: "Atelier IA", price: "100 000 – 200 000 FCFA", includes: "Formation demi-journée ou journée, jusqu'à 15 personnes" },
-      { formula: "Stratégie IA", price: "300 000 – 700 000 FCFA", includes: "Audit + Roadmap 12-24 mois + présentation executive + 2 sessions suivi" },
-      { formula: "Accompagnement", price: "120 000 – 250 000 FCFA/mois", includes: "Suivi mensuel, points stratégiques, ajustements roadmap, veille techno" },
-      { formula: "POC IA", price: "400 000 – 1 500 000 FCFA", includes: "Déploiement d'un cas d'usage pilote : conception, build, mesure d'impact" },
-    ],
-  },
-  {
-    id: "06",
-    title: "AI Chatbots",
-    tagline: "Support client intelligent sur tous vos canaux",
-    icon: "⬢",
+    featured: false,
+    icon: "⬡",
     color: "#10B981",
-    tags: ["WhatsApp", "IA", "Multi-canal"],
-    size: "small",
-    description:
-      "Les chatbots IA de WebCore automatisent vos interactions client tout en offrant une expérience personnalisée et naturelle. Déployables sur WhatsApp, votre site web, Facebook Messenger, Telegram ou toute autre plateforme.",
+    title: "Contenu",
+    pitch: "Un flux de contenu régulier produit avec l'IA pour Instagram, TikTok et LinkedIn, calé sur votre marque.",
+    detail: "Posts, visuels, vidéos — livrés chaque semaine.",
+    ideal: "Coachs, commerces, restaurants, marques personnelles.",
     features: [
-      "FAQ intelligente — réponses automatiques 24h/24",
-      "Qualification et capture de leads avec transfert commercial",
-      "Prise de rendez-vous intégrée avec votre agenda",
-      "Suivi de commandes et statut de livraison en temps réel",
-      "Escalade vers agent humain avec historique de conversation",
-      "Analytics — volume, satisfaction, taux de résolution",
+      "Calendrier éditorial mensuel sur mesure",
+      "Posts Instagram & Facebook — texte + visuel",
+      "Vidéos courtes pour TikTok & Reels",
+      "Contenus LinkedIn pour les profils B2B",
+      "Charte graphique respectée à chaque publication",
+      "Rapport mensuel : portée, engagement, croissance",
     ],
     pricing: [
-      { formula: "Starter Bot", price: "150 000 – 300 000 FCFA", includes: "Chatbot FAQ simple, 20–50 intentions, déploiement WhatsApp ou site web" },
-      { formula: "Business Bot", price: "300 000 – 700 000 FCFA", includes: "IA conversationnelle, prise de RDV, capture leads, 2 canaux, analytics" },
-      { formula: "Premium Bot", price: "700 000 – 1 500 000 FCFA", includes: "Multi-canaux, intégration CRM, logique complexe, IA personnalisée" },
-      { formula: "Enterprise", price: "Sur devis", includes: "Infrastructure dédiée, SLA, multi-bots, équipe de support dédiée" },
-      { formula: "Maintenance", price: "50 000 – 120 000 FCFA/mois", includes: "Optimisation continue, nouvelles intentions, mises à jour IA, support" },
+      { formula: "Essentiel", price: "100 000 – 180 000 FCFA/mois", includes: "12 posts/mois, 1 réseau, visuels inclus" },
+      { formula: "Pro", price: "180 000 – 350 000 FCFA/mois", includes: "20 posts + 4 vidéos/mois, 3 réseaux, rapport mensuel" },
     ],
   },
 ];
@@ -167,12 +98,12 @@ function hexToRgb(hex: string): string {
   return r ? `${parseInt(r[1], 16)},${parseInt(r[2], 16)},${parseInt(r[3], 16)}` : "0,212,255";
 }
 
-/* ──────── SERVICE MODAL ──────── */
-function ServiceModal({
-  service,
+/* ──────── MODAL ──────── */
+function OfferModal({
+  offer,
   onClose,
 }: {
-  service: (typeof services)[0];
+  offer: (typeof offers)[0];
   onClose: () => void;
 }) {
   return (
@@ -184,16 +115,14 @@ function ServiceModal({
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
-        {/* Backdrop */}
         <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
 
-        {/* Panel */}
         <motion.div
-          className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl z-10"
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl z-10"
           style={{
-            background: "rgba(8,8,8,0.95)",
-            border: `1px solid ${service.color}30`,
-            boxShadow: `0 0 60px ${service.color}15, 0 0 120px ${service.color}08`,
+            background: "rgba(8,8,8,0.97)",
+            border: `1px solid ${offer.color}30`,
+            boxShadow: `0 0 60px ${offer.color}12`,
           }}
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -202,29 +131,19 @@ function ServiceModal({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div
-            className="p-6 md:p-8 border-b"
-            style={{ borderColor: `${service.color}15` }}
-          >
+          <div className="p-6 md:p-8 border-b" style={{ borderColor: `${offer.color}15` }}>
             <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
+              <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span
-                    className="font-mono text-xs tracking-widest"
-                    style={{ color: service.color + "70" }}
-                  >
-                    {service.id}
+                  <span className="font-mono text-[10px] tracking-widest" style={{ color: offer.color + "60" }}>
+                    OFFRE {offer.id}
                   </span>
-                  <span className="text-2xl" style={{ color: service.color }}>
-                    {service.icon}
-                  </span>
+                  <span className="text-2xl" style={{ color: offer.color }}>{offer.icon}</span>
                 </div>
-                <h3
-                  className="font-display font-bold text-2xl md:text-3xl text-white mb-2 tracking-tight"
-                >
-                  {service.title}
+                <h3 className="font-display font-bold text-2xl md:text-3xl text-white tracking-tight mb-1">
+                  {offer.title}
                 </h3>
-                <p className="text-white/40 text-sm italic">{service.tagline}</p>
+                <p className="text-white/40 text-sm">{offer.pitch}</p>
               </div>
               <button
                 onClick={onClose}
@@ -235,22 +154,28 @@ function ServiceModal({
             </div>
           </div>
 
-          <div className="p-6 md:p-8 space-y-8">
-            {/* Description */}
-            <p className="text-white/60 leading-relaxed text-sm">{service.description}</p>
+          <div className="p-6 md:p-8 space-y-7">
+            {/* Ideal for */}
+            <div
+              className="flex items-start gap-3 p-4 rounded-xl"
+              style={{ background: `rgba(${hexToRgb(offer.color)},0.06)`, border: `1px solid ${offer.color}20` }}
+            >
+              <span style={{ color: offer.color }} className="text-sm mt-0.5 shrink-0">★</span>
+              <p className="text-sm text-white/70">
+                <span className="font-semibold text-white">Idéal pour : </span>
+                {offer.ideal}
+              </p>
+            </div>
 
             {/* Features */}
             <div>
-              <h4
-                className="font-mono text-xs tracking-widest uppercase mb-4"
-                style={{ color: service.color + "80" }}
-              >
-                Ce que nous livrons
+              <h4 className="font-mono text-[10px] tracking-widest uppercase mb-4" style={{ color: offer.color + "80" }}>
+                Ce qui est inclus
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {service.features.map((f, i) => (
+                {offer.features.map((f, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <span style={{ color: service.color }} className="mt-0.5 text-xs shrink-0">▸</span>
+                    <span style={{ color: offer.color }} className="mt-0.5 text-xs shrink-0">▸</span>
                     <span className="text-white/60 text-sm leading-snug">{f}</span>
                   </div>
                 ))}
@@ -259,32 +184,22 @@ function ServiceModal({
 
             {/* Pricing */}
             <div>
-              <h4
-                className="font-mono text-xs tracking-widest uppercase mb-4"
-                style={{ color: service.color + "80" }}
-              >
-                Tarifs & Formules
+              <h4 className="font-mono text-[10px] tracking-widest uppercase mb-4" style={{ color: offer.color + "80" }}>
+                Tarifs
               </h4>
               <div className="space-y-2">
-                {service.pricing.map((p, i) => (
+                {offer.pricing.map((p, i) => (
                   <div
                     key={i}
                     className="rounded-xl p-4"
                     style={{
-                      background: i === 0
-                        ? `rgba(${hexToRgb(service.color)},0.06)`
-                        : "rgba(255,255,255,0.02)",
-                      border: `1px solid ${i === 0 ? service.color + "25" : "rgba(255,255,255,0.06)"}`,
+                      background: i === 0 ? `rgba(${hexToRgb(offer.color)},0.07)` : "rgba(255,255,255,0.02)",
+                      border: `1px solid ${i === 0 ? offer.color + "25" : "rgba(255,255,255,0.06)"}`,
                     }}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
                       <span className="font-display font-bold text-white text-sm">{p.formula}</span>
-                      <span
-                        className="font-mono text-xs font-bold"
-                        style={{ color: service.color }}
-                      >
-                        {p.price}
-                      </span>
+                      <span className="font-mono text-xs font-bold" style={{ color: offer.color }}>{p.price}</span>
                     </div>
                     <p className="text-white/40 text-xs leading-relaxed">{p.includes}</p>
                   </div>
@@ -298,9 +213,9 @@ function ServiceModal({
               onClick={onClose}
               className="block w-full py-4 text-center font-mono text-sm tracking-widest uppercase rounded-xl transition-all duration-300"
               style={{
-                background: `linear-gradient(135deg, rgba(${hexToRgb(service.color)},0.15), rgba(${hexToRgb(service.color)},0.05))`,
-                border: `1px solid ${service.color}40`,
-                color: service.color,
+                background: `linear-gradient(135deg, rgba(${hexToRgb(offer.color)},0.15), rgba(${hexToRgb(offer.color)},0.05))`,
+                border: `1px solid ${offer.color}40`,
+                color: offer.color,
               }}
             >
               Démarrer ce projet →
@@ -312,173 +227,162 @@ function ServiceModal({
   );
 }
 
-/* ──────── SERVICE CARD ──────── */
-function ServiceCard({
-  service,
-  index,
-  onClick,
-}: {
-  service: (typeof services)[0];
-  index: number;
-  onClick: () => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      className={`relative overflow-hidden rounded-2xl cursor-pointer group ${
-        service.size === "large" ? "md:col-span-2" : "md:col-span-1"
-      }`}
-      variants={fadeInUp}
-      custom={index * 0.1}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        background: hovered
-          ? `linear-gradient(135deg, rgba(${hexToRgb(service.color)},0.08) 0%, rgba(0,0,0,0.5) 100%)`
-          : "rgba(255,255,255,0.02)",
-        border: `1px solid ${hovered ? service.color + "40" : "rgba(255,255,255,0.06)"}`,
-        transition: "all 0.4s ease",
-      }}
-    >
-      {/* Glow */}
-      <motion.div
-        className="absolute -top-16 -right-16 rounded-full pointer-events-none"
-        style={{
-          width: 200,
-          height: 200,
-          background: `radial-gradient(circle, ${service.color}20 0%, transparent 70%)`,
-          filter: "blur(20px)",
-        }}
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-      />
-
-      <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between min-h-[200px]">
-        <div>
-          <div className="flex items-start justify-between mb-5">
-            <span className="font-mono text-xs tracking-widest" style={{ color: service.color + "80" }}>
-              {service.id}
-            </span>
-            <motion.span
-              className="text-3xl leading-none"
-              style={{ color: service.color }}
-              animate={{ rotate: hovered ? 180 : 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {service.icon}
-            </motion.span>
-          </div>
-
-          <h3 className="font-display font-bold text-xl md:text-2xl mb-2 tracking-tight text-white">
-            {service.title}
-          </h3>
-          <p className="text-white/40 leading-relaxed text-sm line-clamp-2">
-            {service.tagline}
-          </p>
-        </div>
-
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-1.5">
-            {service.tags.map((tag) => (
-              <span
-                key={tag}
-                className="font-mono text-[10px] tracking-widest uppercase px-2 py-0.5 rounded"
-                style={{
-                  background: `${service.color}12`,
-                  border: `1px solid ${service.color}25`,
-                  color: service.color + "90",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <motion.span
-            className="font-mono text-xs"
-            style={{ color: service.color }}
-            animate={{ x: hovered ? 4 : 0, opacity: hovered ? 1 : 0.5 }}
-          >
-            Voir les tarifs →
-          </motion.span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 /* ──────── SECTION ──────── */
 export default function Services() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [selectedService, setSelectedService] = useState<(typeof services)[0] | null>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [selected, setSelected] = useState<(typeof offers)[0] | null>(null);
+
+  const featured = offers[0];
+  const rest = offers.slice(1);
 
   return (
     <>
       <section id="services" className="relative py-24 md:py-32 px-4 md:px-12">
         <div className="section-line mb-16 md:mb-24" />
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
           <motion.div
             ref={ref}
-            className="mb-12 md:mb-20"
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={staggerContainer}
+            className="mb-12 md:mb-16"
+            initial={{ opacity: 0, y: 32 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.span
-              variants={fadeInUp}
-              custom={0}
-              className="font-mono text-xs tracking-[0.3em] text-electric/60 uppercase block mb-4"
+            <span className="font-mono text-xs tracking-[0.3em] text-electric/50 uppercase block mb-4">
+              Nos offres
+            </span>
+            <h2
+              className="font-display font-bold text-white leading-tight"
+              style={{ fontSize: "clamp(2rem, 5.5vw, 4rem)", letterSpacing: "-0.03em" }}
             >
-              Nos expertises
-            </motion.span>
-            <motion.h2
-              variants={fadeInUp}
-              custom={0.1}
-              className="font-display font-bold tracking-tighter text-white leading-none"
-              style={{ fontSize: "clamp(2rem, 6vw, 5rem)", letterSpacing: "-0.04em" }}
-            >
-              Services
-              <span className="gradient-text-blue"> IA & Digital</span>
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              custom={0.2}
-              className="mt-6 text-white/40 max-w-lg text-sm md:text-base leading-relaxed"
-            >
-              6 expertises pour propulser votre business. Solutions sur mesure pour les PME
-              africaines qui veulent intégrer l'IA dans leur activité.
-            </motion.p>
+              Ce que WEBCORE
+              <span className="gradient-text-blue"> installe pour vous</span>
+            </h2>
           </motion.div>
 
+          {/* Featured card */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4"
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={staggerContainer}
+            initial={{ opacity: 0, y: 40 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative rounded-2xl overflow-hidden cursor-pointer mb-4 group"
+            onClick={() => setSelected(featured)}
+            style={{
+              background: "linear-gradient(135deg, rgba(0,212,255,0.07) 0%, rgba(0,0,0,0.6) 100%)",
+              border: "1px solid rgba(0,212,255,0.2)",
+            }}
+            whileHover={{ y: -4 }}
           >
-            {services.map((s, i) => (
-              <ServiceCard
-                key={s.id}
-                service={s}
-                index={i}
-                onClick={() => setSelectedService(s)}
-              />
+            {/* Glow top-right */}
+            <div
+              className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none opacity-40"
+              style={{ background: "radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%)", filter: "blur(30px)" }}
+            />
+
+            <div className="relative z-10 p-7 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className="font-mono text-[10px] tracking-widest px-2 py-0.5 rounded"
+                    style={{ background: "rgba(0,212,255,0.12)", border: "1px solid rgba(0,212,255,0.25)", color: "#00D4FF" }}
+                  >
+                    LE PLUS POPULAIRE
+                  </span>
+                  <span className="font-mono text-[10px] tracking-widest text-white/30">OFFRE 01</span>
+                </div>
+                <h3 className="font-display font-bold text-2xl md:text-3xl text-white tracking-tight mb-3">
+                  {featured.title}
+                </h3>
+                <p className="text-white/55 leading-relaxed text-sm md:text-base max-w-xl">
+                  {featured.pitch}{" "}
+                  <span className="text-white/30">{featured.detail}</span>
+                </p>
+                <p className="mt-3 font-mono text-xs text-electric/60">
+                  ★ Idéal pour : {featured.ideal}
+                </p>
+              </div>
+              <div className="shrink-0 flex md:flex-col items-center md:items-end gap-4">
+                <span className="text-4xl" style={{ color: "#00D4FF" }}>{featured.icon}</span>
+                <span
+                  className="font-mono text-xs tracking-widest uppercase px-4 py-2.5 rounded-lg transition-all duration-300 group-hover:bg-electric/20"
+                  style={{ background: "rgba(0,212,255,0.1)", border: "1px solid rgba(0,212,255,0.3)", color: "#00D4FF" }}
+                >
+                  En savoir plus →
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 3 remaining cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {rest.map((offer, i) => (
+              <motion.div
+                key={offer.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.2 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="relative rounded-2xl overflow-hidden cursor-pointer group"
+                onClick={() => setSelected(offer)}
+                style={{
+                  background: "rgba(255,255,255,0.025)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                }}
+                whileHover={{ y: -5, borderColor: offer.color + "40" }}
+              >
+                <div className="p-6 flex flex-col gap-4 h-full">
+                  <div className="flex items-start justify-between">
+                    <span className="font-mono text-[10px] tracking-widest text-white/25">OFFRE {offer.id}</span>
+                    <span className="text-2xl" style={{ color: offer.color }}>{offer.icon}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-xl text-white tracking-tight mb-2">
+                      {offer.title}
+                    </h3>
+                    <p className="text-white/45 text-sm leading-relaxed">
+                      {offer.pitch}
+                    </p>
+                  </div>
+                  <p className="font-mono text-[10px] text-white/25 mt-auto pt-2">
+                    ★ {offer.ideal}
+                  </p>
+                  <motion.span
+                    className="font-mono text-xs"
+                    style={{ color: offer.color }}
+                    initial={{ opacity: 0.4 }}
+                    whileHover={{ opacity: 1 }}
+                  >
+                    En savoir plus →
+                  </motion.span>
+                </div>
+              </motion.div>
             ))}
+          </div>
+
+          {/* Custom projects — discreet mention */}
+          <motion.div
+            className="mt-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <p className="font-mono text-xs text-white/20 tracking-widest">
+              Besoin d'un projet plus complexe ?{" "}
+              <a
+                href="#contact"
+                className="text-white/35 underline underline-offset-4 hover:text-white/55 transition-colors"
+              >
+                Projets sur mesure — sur devis
+              </a>
+            </p>
           </motion.div>
         </div>
       </section>
 
       {/* Modal */}
-      {selectedService && (
-        <ServiceModal
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
-        />
+      {selected && (
+        <OfferModal offer={selected} onClose={() => setSelected(null)} />
       )}
     </>
   );
