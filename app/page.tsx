@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 
 import Loader from "@/components/ui/Loader";
@@ -35,78 +35,74 @@ const marqueeTopItems = [
 ];
 
 export default function Home() {
-  const [loaded, setLoaded] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(true);
   useLenis();
 
   return (
     <>
-      {!loaded && <Loader onComplete={() => setLoaded(true)} />}
+      {/* Overlay rapide — ne bloque plus le rendu du contenu */}
+      <Loader visible={loaderVisible} onComplete={() => setLoaderVisible(false)} />
 
-      {loaded && (
-        <main
-          className="relative bg-void min-h-screen"
-          style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.5s ease" }}
-        >
-          <CustomCursor />
-          <Navigation />
+      <main className="relative bg-void min-h-screen">
+        <CustomCursor />
+        <Navigation />
 
-          {/* Hero */}
-          <Hero />
+        {/* Hero */}
+        <Hero />
 
-          {/* Pain Points */}
-          <PainPoints />
+        {/* Pain Points */}
+        <PainPoints />
 
-          {/* Marquee separator */}
-          <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
-            <Marquee
-              items={marqueeTopItems}
-              speed={20}
-              className="text-white/20"
-              separator="·"
-            />
-          </div>
+        {/* Marquee separator */}
+        <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
+          <Marquee
+            items={marqueeTopItems}
+            speed={20}
+            className="text-white/20"
+            separator="·"
+          />
+        </div>
 
-          {/* Services */}
-          <Services />
+        {/* Services */}
+        <Services />
 
-          {/* Pricing */}
-          <Pricing />
+        {/* Pricing */}
+        <Pricing />
 
-          {/* Process */}
-          <Process />
+        {/* Process */}
+        <Process />
 
-          {/* Why Local */}
-          <WhyLocal />
+        {/* Why Local */}
+        <WhyLocal />
 
-          {/* AI Section */}
-          <AISection />
+        {/* AI Section */}
+        <AISection />
 
-          {/* Marquee separator 2 */}
-          <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
-            <Marquee
-              items={["AUDIT GRATUIT", "PRIX FIXE", "SANS SURPRISE", "LIVRAISON RAPIDE", "SUIVI INCLUS", "PAIEMENT WAVE"]}
-              speed={18}
-              direction="right"
-              separator="✦"
-            />
-          </div>
+        {/* Marquee separator 2 */}
+        <div className="py-4 overflow-hidden border-t border-b border-white/[0.04]">
+          <Marquee
+            items={["AUDIT GRATUIT", "PRIX FIXE", "SANS SURPRISE", "LIVRAISON RAPIDE", "SUIVI INCLUS", "PAIEMENT WAVE"]}
+            speed={18}
+            direction="right"
+            separator="✦"
+          />
+        </div>
 
-          {/* Testimonials */}
-          <Testimonials />
+        {/* Testimonials */}
+        <Testimonials />
 
-          {/* FAQ */}
-          <FAQ />
+        {/* FAQ */}
+        <FAQ />
 
-          {/* Final CTA */}
-          <FinalCTA />
+        {/* Final CTA */}
+        <FinalCTA />
 
-          {/* Contact */}
-          <Contact />
+        {/* Contact */}
+        <Contact />
 
-          {/* Footer */}
-          <Footer />
-        </main>
-      )}
+        {/* Footer */}
+        <Footer />
+      </main>
     </>
   );
 }
