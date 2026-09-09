@@ -70,10 +70,10 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:hello@webcore.agency"
+                  href="mailto:buildbywc@gmail.com"
                   className="text-white/40 hover:text-electric/70 text-sm transition-colors duration-300 break-all"
                 >
-                  hello@webcore.agency
+                  buildbywc@gmail.com
                 </a>
               </li>
               <li>
