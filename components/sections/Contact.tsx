@@ -72,19 +72,27 @@ export default function Contact() {
         }
       );
 
-      let detail = "";
+      // ATTENTION : Formsubmit renvoie HTTP 200 meme quand il REFUSE d'envoyer
+      // (formulaire non active, quota depasse...). Se fier a res.ok affichait
+      // un faux succes. La verite est dans le champ JSON `success`.
+      let payload: { success?: string | boolean; message?: string } = {};
       try {
-        const body = await res.json();
-        if (body && typeof body.message === "string") detail = body.message;
+        payload = await res.json();
       } catch {
-        /* reponse non-JSON : on garde detail vide */
+        /* reponse non-JSON */
       }
 
-      if (res.ok) {
+      const accepted =
+        res.ok &&
+        (payload.success === true || String(payload.success) === "true");
+
+      if (accepted) {
         setSubmitted(true);
       } else {
         setError(true);
-        setErrorDetail(detail || `Code ${res.status}`);
+        setErrorDetail(
+          payload.message || (res.ok ? "Envoi refusé par le service." : `Code ${res.status}`)
+        );
       }
     } catch (err) {
       setError(true);
