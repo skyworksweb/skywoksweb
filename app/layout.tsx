@@ -60,10 +60,10 @@ export default function RootLayout({
             "style-src 'self' 'unsafe-inline'",
             "font-src 'self'",
             "img-src 'self' data:",
-            // *.formsubmit.co couvre une eventuelle redirection vers un
-            // sous-domaine : sans cela la CSP bloquerait la cible du 302.
-            "connect-src 'self' https://formsubmit.co https://*.formsubmit.co",
-            "form-action 'self' https://formsubmit.co https://*.formsubmit.co",
+            // Seule destination autorisee pour les requetes sortantes :
+            // l'API du formulaire de contact.
+            "connect-src 'self' https://api.web3forms.com",
+            "form-action 'self' https://api.web3forms.com",
             "base-uri 'self'",
             "object-src 'none'",
             "frame-src 'none'",

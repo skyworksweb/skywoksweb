@@ -5,11 +5,22 @@ import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const COMPANY_EMAIL = "buildbywc@gmail.com";
 
+/**
+ * Clé d'accès Web3Forms.
+ * → À récupérer sur https://web3forms.com (gratuit, 30 secondes) :
+ *   on saisit buildbywc@gmail.com, la clé arrive par email, on la colle ici.
+ *
+ * Cette clé n'est PAS un secret : Web3Forms la conçoit pour être publique
+ * et embarquée dans le code client. Elle ne donne accès à rien d'autre
+ * qu'à l'envoi d'un message vers l'adresse qui lui est associée.
+ */
+const WEB3FORMS_KEY = "REMPLACER_PAR_LA_CLE";
+
 const budgets = [
-  "< 500 000 FCFA",
-  "500k – 2M FCFA",
-  "2M – 8M FCFA",
-  "8M+ FCFA / Sur devis",
+  "< 150 000 FCFA",
+  "150 000 – 300 000 FCFA",
+  "300 000 – 600 000 FCFA",
+  "Je ne sais pas encore",
 ];
 
 export default function Contact() {
@@ -48,45 +59,45 @@ export default function Contact() {
       return;
     }
 
-    const data = new FormData();
-    data.append("name", form.name);
-    data.append("email", form.email);
-    data.append("company", form.company || "—");
-    data.append("budget", form.budget || "Non spécifié");
-    data.append("message", form.message);
-    data.append("_subject", `Nouveau projet WebCore — ${form.company || form.name}`);
-    // _captcha DOIT rester "false" : l'endpoint /ajax/ ne peut pas afficher
-    // de defi CAPTCHA dans un fetch, la requete echoue sinon.
-    // L'anti-spam est assure par le honeypot ci-dessus + _honey cote serveur.
-    data.append("_captcha", "false");
-    data.append("_honey", form.website);
-    data.append("_template", "table");
+    // Garde-fou : sans clé configurée, on echoue explicitement plutot que
+    // de laisser croire a un envoi. Le repli mail/WhatsApp reste propose.
+    if (WEB3FORMS_KEY === "REMPLACER_PAR_LA_CLE") {
+      setError(true);
+      setErrorDetail("Formulaire pas encore configuré (clé Web3Forms manquante).");
+      setSending(false);
+      return;
+    }
 
     try {
-      const res = await fetch(
-        `https://formsubmit.co/ajax/${COMPANY_EMAIL}`,
-        {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: data,
-        }
-      );
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Nouveau projet WebCore — ${form.company || form.name}`,
+          from_name: "Site WEBCORE",
+          name: form.name,
+          email: form.email,
+          entreprise: form.company || "—",
+          budget: form.budget || "Non spécifié",
+          message: form.message,
+          botcheck: form.website, // honeypot natif Web3Forms
+        }),
+      });
 
-      // ATTENTION : Formsubmit renvoie HTTP 200 meme quand il REFUSE d'envoyer
-      // (formulaire non active, quota depasse...). Se fier a res.ok affichait
-      // un faux succes. La verite est dans le champ JSON `success`.
-      let payload: { success?: string | boolean; message?: string } = {};
+      // On ne se fie PAS au code HTTP seul : l'API peut repondre 200 en
+      // refusant l'envoi. La verite est dans le champ `success`.
+      let payload: { success?: boolean; message?: string } = {};
       try {
         payload = await res.json();
       } catch {
         /* reponse non-JSON */
       }
 
-      const accepted =
-        res.ok &&
-        (payload.success === true || String(payload.success) === "true");
-
-      if (accepted) {
+      if (payload.success === true) {
         setSubmitted(true);
       } else {
         setError(true);
