@@ -27,6 +27,7 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
+  const [errorDetail, setErrorDetail] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,7 +55,10 @@ export default function Contact() {
     data.append("budget", form.budget || "Non spécifié");
     data.append("message", form.message);
     data.append("_subject", `Nouveau projet WebCore — ${form.company || form.name}`);
-    data.append("_captcha", "true");
+    // _captcha DOIT rester "false" : l'endpoint /ajax/ ne peut pas afficher
+    // de defi CAPTCHA dans un fetch, la requete echoue sinon.
+    // L'anti-spam est assure par le honeypot ci-dessus + _honey cote serveur.
+    data.append("_captcha", "false");
     data.append("_honey", form.website);
     data.append("_template", "table");
 
@@ -67,13 +71,28 @@ export default function Contact() {
           body: data,
         }
       );
+
+      let detail = "";
+      try {
+        const body = await res.json();
+        if (body && typeof body.message === "string") detail = body.message;
+      } catch {
+        /* reponse non-JSON : on garde detail vide */
+      }
+
       if (res.ok) {
         setSubmitted(true);
       } else {
         setError(true);
+        setErrorDetail(detail || `Code ${res.status}`);
       }
-    } catch {
+    } catch (err) {
       setError(true);
+      setErrorDetail(
+        err instanceof TypeError
+          ? "Requête bloquée par le navigateur ou réseau indisponible."
+          : "Erreur inattendue."
+      );
     } finally {
       setSending(false);
     }
@@ -307,9 +326,36 @@ export default function Contact() {
                 </div>
 
                 {error && (
-                  <p className="text-red-400/80 text-xs font-mono">
-                    Erreur d'envoi. Contactez-nous directement : {COMPANY_EMAIL}
-                  </p>
+                  <div
+                    className="rounded-lg p-4 space-y-2"
+                    style={{
+                      background: "rgba(248,113,113,0.06)",
+                      border: "1px solid rgba(248,113,113,0.2)",
+                    }}
+                  >
+                    <p className="text-red-400/90 text-sm">
+                      L'envoi a échoué. Écrivez-nous directement :
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={`mailto:${COMPANY_EMAIL}`}
+                        className="font-mono text-xs text-electric hover:underline break-all"
+                      >
+                        {COMPANY_EMAIL}
+                      </a>
+                      <a
+                        href="#cta"
+                        className="font-mono text-xs text-electric hover:underline"
+                      >
+                        ou via WhatsApp →
+                      </a>
+                    </div>
+                    {errorDetail && (
+                      <p className="font-mono text-[10px] text-white/25">
+                        Détail technique : {errorDetail}
+                      </p>
+                    )}
+                  </div>
                 )}
 
                 <motion.button

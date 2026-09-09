@@ -60,8 +60,10 @@ export default function RootLayout({
             "style-src 'self' 'unsafe-inline'",
             "font-src 'self'",
             "img-src 'self' data:",
-            "connect-src 'self' https://formsubmit.co",
-            "form-action 'self' https://formsubmit.co",
+            // *.formsubmit.co couvre une eventuelle redirection vers un
+            // sous-domaine : sans cela la CSP bloquerait la cible du 302.
+            "connect-src 'self' https://formsubmit.co https://*.formsubmit.co",
+            "form-action 'self' https://formsubmit.co https://*.formsubmit.co",
             "base-uri 'self'",
             "object-src 'none'",
             "frame-src 'none'",
