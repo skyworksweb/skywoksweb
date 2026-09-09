@@ -22,6 +22,7 @@ export default function Contact() {
     company: "",
     budget: "",
     message: "",
+    website: "", // honeypot anti-spam — jamais visible ni rempli par un humain
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -38,6 +39,14 @@ export default function Contact() {
     setSending(true);
     setError(false);
 
+    // Anti-spam : honeypot. Les robots remplissent ce champ invisible,
+    // les humains jamais. On abandonne silencieusement l'envoi.
+    if (form.website) {
+      setSubmitted(true);
+      setSending(false);
+      return;
+    }
+
     const data = new FormData();
     data.append("name", form.name);
     data.append("email", form.email);
@@ -45,7 +54,8 @@ export default function Contact() {
     data.append("budget", form.budget || "Non spécifié");
     data.append("message", form.message);
     data.append("_subject", `Nouveau projet WebCore — ${form.company || form.name}`);
-    data.append("_captcha", "false");
+    data.append("_captcha", "true");
+    data.append("_honey", form.website);
     data.append("_template", "table");
 
     try {
@@ -229,6 +239,21 @@ export default function Contact() {
                   value={form.company}
                   onChange={handleChange}
                 />
+
+                {/* Honeypot anti-spam — invisible et hors du flux de tabulation.
+                    Un robot le remplit, un humain ne le voit jamais. */}
+                <div aria-hidden="true" className="absolute w-px h-px -left-[9999px] overflow-hidden">
+                  <label htmlFor="website">Ne pas remplir ce champ</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={form.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
 
                 {/* Budget */}
                 <div>

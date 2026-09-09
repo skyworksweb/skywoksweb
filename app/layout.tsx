@@ -42,8 +42,43 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${syne.variable} ${spaceMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/*
+          Content-Security-Policy en balise meta.
+          GitHub Pages ne permet pas d'en-têtes HTTP personnalisés, c'est donc
+          la seule CSP possible ici. Limites connues de la variante meta :
+          `frame-ancestors` y est ignoré (voir le frame-buster plus bas).
+
+          'unsafe-inline' est requis : Next.js injecte des scripts d'hydratation
+          inline, et React rend les style={{}} en attributs style inline.
+          Les polices sont auto-hébergées par next/font — aucun appel à Google.
+        */}
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content={[
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline'",
+            "font-src 'self'",
+            "img-src 'self' data:",
+            "connect-src 'self' https://formsubmit.co",
+            "form-action 'self' https://formsubmit.co",
+            "base-uri 'self'",
+            "object-src 'none'",
+            "frame-src 'none'",
+          ].join("; ")}
+        />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+        {/*
+          Anti-clickjacking. X-Frame-Options et frame-ancestors exigent un
+          en-tête HTTP, impossible sur GitHub Pages — on casse donc le cadre
+          en JS si le site est chargé dans une iframe tierce.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(window.top!==window.self){window.top.location=window.self.location.href}}catch(e){document.documentElement.style.display='none'}})();`,
+          }}
+        />
       </head>
       <body className="bg-void text-white antialiased noise">
         <div className="scanline" />
