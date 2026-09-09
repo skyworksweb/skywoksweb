@@ -14,7 +14,7 @@ const COMPANY_EMAIL = "buildbywc@gmail.com";
  * et embarquée dans le code client. Elle ne donne accès à rien d'autre
  * qu'à l'envoi d'un message vers l'adresse qui lui est associée.
  */
-const WEB3FORMS_KEY = "REMPLACER_PAR_LA_CLE";
+const WEB3FORMS_KEY: string = "11cb778c-6993-45fe-9010-8432205ade64";
 
 const budgets = [
   "< 150 000 FCFA",
@@ -59,9 +59,9 @@ export default function Contact() {
       return;
     }
 
-    // Garde-fou : sans clé configurée, on echoue explicitement plutot que
+    // Garde-fou : sans clé valide, on echoue explicitement plutot que
     // de laisser croire a un envoi. Le repli mail/WhatsApp reste propose.
-    if (WEB3FORMS_KEY === "REMPLACER_PAR_LA_CLE") {
+    if (!WEB3FORMS_KEY || WEB3FORMS_KEY === "REMPLACER_PAR_LA_CLE") {
       setError(true);
       setErrorDetail("Formulaire pas encore configuré (clé Web3Forms manquante).");
       setSending(false);
