@@ -1,0 +1,80 @@
+name: Deploy WEBCORE to GitHub Pages
+
+on:
+  push:
+    branches: [claude/festive-maxwell-mGxPS]
+  workflow_dispatch:
+
+# Moindre privilège : contents:write est requis par l'action de déploiement
+# pour pousser sur gh-pages. pages:write sert à l'appel API Pages.
+# id-token n'est PAS nécessaire (pas d'OIDC / actions-deploy-pages).
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Actions épinglées au SHA (immuable) — un tag peut être réécrit
+      # et exécuter du code arbitraire avec contents:write.
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: claude/festive-maxwell-mGxPS
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # npm ci : build reproductible, respecte strictement package-lock.json
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: |
+          cat > next.config.js << 'EOF'
+          /** @type {import('next').NextConfig} */
+          const nextConfig = {
+            output: 'export',
+            basePath: '/webcore',
+            assetPrefix: '/webcore',
+            reactStrictMode: false,
+            images: { unoptimized: true },
+            experimental: {
+              optimizePackageImports: ['framer-motion'],
+            },
+          };
+          module.exports = nextConfig;
+          EOF
+          npm run build
+
+      - name: Add .nojekyll
+        run: touch out/.nojekyll
+
+      - name: Deploy to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
+        with:
+          folder: out
+          branch: gh-pages
+          clean: true
+
+      - name: Switch Pages source to gh-pages branch
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          curl -s -X PUT \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -d '{"source": {"branch": "gh-pages", "path": "/"}}'
+          echo "Pages source update attempted"
