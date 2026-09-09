@@ -38,8 +38,8 @@ jobs:
           /** @type {import('next').NextConfig} */
           const nextConfig = {
             output: 'export',
-            basePath: '/skywoksweb',
-            assetPrefix: '/skywoksweb',
+            basePath: '/webcore',
+            assetPrefix: '/webcore',
             reactStrictMode: false,
             images: { unoptimized: true },
             experimental: {
